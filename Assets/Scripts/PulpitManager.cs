@@ -20,7 +20,7 @@ public class PulpitManager : MonoBehaviour
 
     void LoadPulpitSettings()
     {
-        string filePath = Path.Combine(Application.dataPath, "player_data.json");
+        string filePath = Path.Combine(Application.dataPath, "Scripts/player_data.json");
 
         if (File.Exists(filePath))
         {

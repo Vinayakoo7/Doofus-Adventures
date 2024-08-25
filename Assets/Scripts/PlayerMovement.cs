@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
     void LoadPlayerSettings()
     {
-        string path = "Assets/player_data.json";
+        string path = "Assets/Scripts/player_data.json";
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
