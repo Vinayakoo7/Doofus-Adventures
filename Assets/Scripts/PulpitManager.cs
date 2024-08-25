@@ -1,13 +1,13 @@
 using UnityEngine;
 using System.Collections;
 using System.IO;
-
 public class PulpitManager : MonoBehaviour
 {
-    public GameObject pulpitPrefab; // We Assign our Pulpit prefab here.
+    public GameObject pulpitPrefab; // We Assign our Pulpit prefab here
     public float minDestroyTime = 4f;
     public float maxDestroyTime = 5f;
     public float spawnTime = 2.5f;
+    public ScoreManager scoreManager; // Reference to the ScoreManager
 
     private GameObject currentPulpit;
     private Vector3 lastPulpitPosition;
@@ -45,28 +45,28 @@ public class PulpitManager : MonoBehaviour
 
     IEnumerator HandlePulpitLifecycle(GameObject pulpit)
     {
-        // Wait for a new pulpit to spawn
+        // We Wait for a new pulpit to spawn
         yield return new WaitForSeconds(spawnTime);
 
-        // Spawn the next pulpit before destroying the current one
+        // We Spawn the next pulpit before destroying the current one
         SpawnNextPulpit();
 
-        // Wait for a random destroy time before destroying the current pulpit
+        // We Wait for a random destroy time before destroying the current pulpit
         float destroyTime = Random.Range(minDestroyTime, maxDestroyTime);
         yield return new WaitForSeconds(destroyTime);
 
-        // Destroy the old pulpit
+        // We Destroy the old pulpit
         Destroy(pulpit);
     }
 
     void SpawnNextPulpit()
     {
-        // Calculate a new random position adjacent to the last pulpit
+        // to Calculate a new random position adjacent to the last pulpit
         Vector3 newPosition = GetRandomAdjacentPosition(lastPulpitPosition);
         currentPulpit = Instantiate(pulpitPrefab, newPosition, Quaternion.identity);
         lastPulpitPosition = newPosition;
 
-        // Start the lifecycle management for the new pulpit
+        // to Start the lifecycle management for the new pulpit
         StartCoroutine(HandlePulpitLifecycle(currentPulpit));
     }
 
@@ -78,6 +78,19 @@ public class PulpitManager : MonoBehaviour
 
         // Return the new position by moving in the chosen direction
         return position + direction * pulpitPrefab.transform.localScale.x;
+    }
+
+    public void OnDoofusMovedToNewPulpit(float scoreIncrement)
+    {
+        // to Update the score through ScoreManager
+        if (scoreManager != null)
+        {
+            scoreManager.IncreaseScore(scoreIncrement);
+        }
+        else
+        {
+            Debug.LogError("ScoreManager is not assigned.");
+        }
     }
 }
 
