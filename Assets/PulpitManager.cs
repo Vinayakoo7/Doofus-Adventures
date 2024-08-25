@@ -4,7 +4,7 @@ using System.IO;
 
 public class PulpitManager : MonoBehaviour
 {
-    public GameObject pulpitPrefab; // Assign your Pulpit prefab here
+    public GameObject pulpitPrefab; // We Assign our Pulpit prefab here
     public float minDestroyTime = 4f;
     public float maxDestroyTime = 5f;
     public float spawnTime = 2.5f;
