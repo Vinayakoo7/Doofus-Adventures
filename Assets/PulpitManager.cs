@@ -40,20 +40,23 @@ public class PulpitManager : MonoBehaviour
     {
         lastPulpitPosition = Vector3.zero;
         currentPulpit = Instantiate(pulpitPrefab, lastPulpitPosition, Quaternion.identity);
-        StartCoroutine(DestroyAndSpawnPulpit(currentPulpit));
+        StartCoroutine(HandlePulpitLifecycle(currentPulpit));
     }
 
-    IEnumerator DestroyAndSpawnPulpit(GameObject pulpit)
+    IEnumerator HandlePulpitLifecycle(GameObject pulpit)
     {
-        // Wait for a random destroy time
+        // Wait for a new pulpit to spawn
+        yield return new WaitForSeconds(spawnTime);
+
+        // Spawn the next pulpit before destroying the current one
+        SpawnNextPulpit();
+
+        // Wait for a random destroy time before destroying the current pulpit
         float destroyTime = Random.Range(minDestroyTime, maxDestroyTime);
         yield return new WaitForSeconds(destroyTime);
 
-        // Destroy the current pulpit
+        // Destroy the old pulpit
         Destroy(pulpit);
-
-        // Spawn the next pulpit
-        SpawnNextPulpit();
     }
 
     void SpawnNextPulpit()
@@ -63,13 +66,13 @@ public class PulpitManager : MonoBehaviour
         currentPulpit = Instantiate(pulpitPrefab, newPosition, Quaternion.identity);
         lastPulpitPosition = newPosition;
 
-        // Start the destruction process for the new pulpit
-        StartCoroutine(DestroyAndSpawnPulpit(currentPulpit));
+        // Start the lifecycle management for the new pulpit
+        StartCoroutine(HandlePulpitLifecycle(currentPulpit));
     }
 
     Vector3 GetRandomAdjacentPosition(Vector3 position)
     {
-        // Choose a random direction to move
+        // Choose a random direction to move (horizontal or vertical only)
         Vector3[] directions = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
         Vector3 direction = directions[Random.Range(0, directions.Length)];
 
