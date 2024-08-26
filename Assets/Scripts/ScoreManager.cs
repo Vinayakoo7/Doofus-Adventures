@@ -1,30 +1,36 @@
 using UnityEngine;
 using TMPro;
+
 public class ScoreManager : MonoBehaviour
 {
-    public TextMeshProUGUI scoreText; // Reference to the TextMeshProUGUI component
+    public TextMeshProUGUI scoreText;
     private float score = 0f;
+
     void Start()
     {
-        // Initialize score display
         UpdateScoreDisplay();
     }
+
     public void IncreaseScore(float increment)
     {
         score += increment;
         UpdateScoreDisplay();
     }
+
     void UpdateScoreDisplay()
     {
         if (scoreText != null)
         {
-            // Multiply the score by 10 and convert to an integer for display
             int displayScore = Mathf.RoundToInt(score * 10);
-            scoreText.text = "Score: " + displayScore.ToString();
-        }
+            scoreText.text = displayScore.ToString() + "\nScore";}
         else
         {
-            Debug.LogError("Score TextMeshProUGUI component is not assigned.");
+            Debug.LogError("Score component not assigned.");
         }
+    }
+
+    public void HideScore()
+    {
+        scoreText.gameObject.SetActive(false);
     }
 }

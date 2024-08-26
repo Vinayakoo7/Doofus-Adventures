@@ -1,14 +1,15 @@
 using UnityEngine;
 using System.Collections;
 using System.IO;
+
 public class PulpitManager : MonoBehaviour
 {
-    public GameObject pulpitPrefab; // We Assign our Pulpit prefab here
-    public float minDestroyTime = 4f;
-    public float maxDestroyTime = 5f;
-    public float spawnTime = 2.5f;
+    public GameObject pulpitPrefab; // We assign our Pulpit prefab here
     public ScoreManager scoreManager; // Reference to the ScoreManager
 
+    private float minDestroyTime;
+    private float maxDestroyTime;
+    private float spawnTime;
     private GameObject currentPulpit;
     private Vector3 lastPulpitPosition;
 
@@ -45,35 +46,35 @@ public class PulpitManager : MonoBehaviour
 
     IEnumerator HandlePulpitLifecycle(GameObject pulpit)
     {
-        // We Wait for a new pulpit to spawn
+        // Wait for a new pulpit to spawn
         yield return new WaitForSeconds(spawnTime);
 
-        // We Spawn the next pulpit before destroying the current one
+        // Spawn the next pulpit before destroying the current one
         SpawnNextPulpit();
 
-        // We Wait for a random destroy time before destroying the current pulpit
+        // Wait for a random destroy time before destroying the current pulpit
         float destroyTime = Random.Range(minDestroyTime, maxDestroyTime);
         yield return new WaitForSeconds(destroyTime);
 
-        // We Destroy the old pulpit
+        // Destroy the old pulpit
         Destroy(pulpit);
     }
 
     void SpawnNextPulpit()
     {
-        // to Calculate a new random position adjacent to the last pulpit
+        // Calculate a new random position adjacent to the last pulpit
         Vector3 newPosition = GetRandomAdjacentPosition(lastPulpitPosition);
         currentPulpit = Instantiate(pulpitPrefab, newPosition, Quaternion.identity);
         lastPulpitPosition = newPosition;
 
-        // to Start the lifecycle management for the new pulpit
+        // Start the lifecycle management for the new pulpit
         StartCoroutine(HandlePulpitLifecycle(currentPulpit));
     }
 
     Vector3 GetRandomAdjacentPosition(Vector3 position)
     {
         // Choose a random direction to move (horizontal or vertical only)
-        Vector3[] directions = { Vector3.forward, Vector3.back, Vector3.left, Vector3.right };
+        Vector3[] directions = { Vector3.forward, Vector3.left, Vector3.right }; // We won't have back as that makes gameplay difficult
         Vector3 direction = directions[Random.Range(0, directions.Length)];
 
         // Return the new position by moving in the chosen direction
@@ -82,7 +83,7 @@ public class PulpitManager : MonoBehaviour
 
     public void OnDoofusMovedToNewPulpit(float scoreIncrement)
     {
-        // to Update the score through ScoreManager
+        // Update the score on ScoreManager
         if (scoreManager != null)
         {
             scoreManager.IncreaseScore(scoreIncrement);
