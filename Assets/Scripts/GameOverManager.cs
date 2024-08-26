@@ -15,7 +15,7 @@ public class GameOverManager : MonoBehaviour
 
     public void TriggerGameOver()
     {
-        """ I want to have the game over text display above Doofus instead of a seperate screen and I wanna watch him fall"""
+        //I want to have the game over text display above Doofus instead of a seperate screen and I wanna watch him fall
         
         // we show the Game Over canvas
         gameOverCanvas.SetActive(true);
