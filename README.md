@@ -1,14 +1,5 @@
 # Doofus Adventure Game
-## Drive Link of the folder (Github does not have all the files)
-- **(https://drive.google.com/file/d/1zkIn1DOfjxQvTLGHTmYKKeBUh4Rq_0HZ/view?usp=sharing)
-
-## Overview
-
-Doofus Adventure Game made for HitWicket selection process for the Game Developer Role.
-I had some trouble after building so the game only works when we are inside the Unity Game viewer/player
-I have not developed countdown timer on the pulpits as i faced some issues there.
-I have developed this project during my exams so the commits are not hourly.
-
+## Update Coming soon!
 ## Features
 
 - **Level 1: Dynamic Pulpit Spawning**: Platforms spawn and disappear at random intervals.
